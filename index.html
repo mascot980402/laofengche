@@ -117,11 +117,11 @@
             display: flex;
             flex-direction: column;
             gap: 0.5rem;
-            width: 45%;
+            width: 40%;
         }
 
         #detail-section .text-video-row .video-container {
-            width: 55%;
+            width: 60%;
         }
 
         /* 最后一个文本组件字体放大到原来的 3 倍 */
@@ -204,13 +204,13 @@
                 </div>
                 <div class="text-video-row">
                     <div class="text-container">
-                        <p class="text-lg font-bold", id="detail-section-text-customer">Microsoft</p>
-                        <p class="text-lg font-bold">-</p>
+                        <p class="text-2xl font-bold", id="detail-section-text-customer">Microsoft</p>
+                        <p class="text-2xl font-bold">-</p>
                         <p class="text-4xl font-bold", id="detail-section-text-casename">The Everyday Tactician</p>
-                        <p class="text-lg", id="detail-section-text-caseDetail">The announcement made headlines everywhere and people from around the world applied. Nathan Owolabi, a dedicated “Football Manager” player, got the job. He used the data skills he honed while playing the game to help the club in the real world: developing formations, finding new strategies and uncovering the opposition’s weaknesses. The story of this unusual approach to football was told in a documentary series on TNT Sports, the U.K.’s biggest sports broadcaster.With the help of a data-savvy gamer, the club achieved the best season ever and was promoted to League Two for the first time in its 132-year history. Perhaps more important, Xbox saw a dramatic increase in gamers playing “Football Manager” on the console, and “Football Manager 24” became the most played edition in the history of the game franchise.</p>
+                        <p class="text-2xl", id="detail-section-text-caseDetail">The announcement made headlines everywhere and people from around the world applied. Nathan Owolabi, a dedicated “Football Manager” player, got the job. He used the data skills he honed while playing the game to help the club in the real world: developing formations, finding new strategies and uncovering the opposition’s weaknesses. The story of this unusual approach to football was told in a documentary series on TNT Sports, the U.K.’s biggest sports broadcaster.With the help of a data-savvy gamer, the club achieved the best season ever and was promoted to League Two for the first time in its 132-year history. Perhaps more important, Xbox saw a dramatic increase in gamers playing “Football Manager” on the console, and “Football Manager 24” became the most played edition in the history of the game franchise.</p>
                     </div>
                     <div class="video-container">
-                        <video width="100%" height="auto" controls>
+                        <video width="100%" height="auto" id="detail-section-video" controls>
                             <source src="resource/case01-00-video.mp4" type="video/mp4">
                             Your browser does not support the video tag.
                         </video>
@@ -382,6 +382,7 @@
         const caseCustomer = document.getElementById('detail-section-text-customer');
         const caseName = document.getElementById('detail-section-text-casename');
         const caseDetail = document.getElementById('detail-section-text-caseDetail');
+        const caseVideo = document.getElementById('detail-section-video');
         const closeButton = document.getElementById('detail-section-button-close');
         const secondRowImages = document.getElementById('second-row-images');
 
@@ -464,7 +465,9 @@
                 caseCustomer.textContent = `${caseCustomers[index]}`;
                 caseName.textContent = `${caseNames[index]}`;
                 caseDetail.textContent = `${caseDetailDescriptors[index]}`;
-                //caseName.textContent = `${caseVideos[index]}`;
+                caseVideo.src = `${caseVideos[index]}`;
+                caseVideo.load();
+                caseVideo.play();
                 SlideDown();
                 ScrollToFirstRowImagesBottom();
             });
@@ -472,6 +475,7 @@
 
         // 给关闭按钮添加点击事件
         closeButton.addEventListener('click', () => {
+            caseVideo.pause();
             ShinkUp();
             ScrollToFirstRowImagesBottom();
         });
