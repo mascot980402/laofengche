@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+    <title>上海老风车广告传媒</title>
+    <style>
+        /* 增大横幅高度 */
+        header.bg-blue-500 {
+            z-index: 999;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+
+        /* 下拉菜单样式 */
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            background-color: white;
+            border: 1px solid #ccc;
+            min-width: 120px;
+            z-index: 1;
+            top: 100%;
+            right: 0;
+        }
+
+        .dropdown-menu.show {
+            display: block;
+        }
+
+        /* 图片容器样式 */
+        .image-container {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            position:relative;
+            cursor: pointer;
+        }
+
+        /* 图片悬浮动画效果 */
+        .image-hover-zoom img {
+            transition: transform 0.3s ease;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform-origin: center;
+            position:relative
+        }
+
+        .image-hover-zoom:hover img {
+            transform: scale(1.1);
+        }
+
+        #first-row-images {
+            position: relative;
+            margin-top: 3rem;
+            overflow: hidden;
+        }
+
+        /* 移除网格布局的间距 */
+        .grid {
+            gap: 0;
+        }
+
+        /* 移除横幅和第一行图片组件间的空隙 */
+        .mt-24 {
+            margin-top: 0;
+        }
+
+        .detail-section-container {
+            position: relative;
+            z-index: -1;
+        }
+
+        /* 详细信息部分初始不可见 */
+        #detail-section {
+            position: absolute;
+        }
+
+        #detail-section.show {
+            display: flex;
+            opacity: 1;
+        }
+
+        /* 详细信息部分按钮行样式 */
+        #detail-section .button-row {
+            display: flex;
+            gap: 0.5rem;
+            padding: 0.5rem;
+            justify-content: space-between;
+        }
+
+        /* 扁平化按钮样式 */
+        #detail-section .button-row button {
+            background-color: transparent;
+            padding: 1.5rem 2rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        /* 详细信息部分文本和视频行样式 */
+        #detail-section .text-video-row {
+            background-color: #f0f0f0;
+            display: flex;
+            padding: 1rem;
+            gap: 1rem;
+        }
+
+        #detail-section .text-video-row .text-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            width: 45%;
+        }
+
+        #detail-section .text-video-row .video-container {
+            width: 55%;
+        }
+
+        /* 最后一个文本组件字体放大到原来的 3 倍 */
+        #company-profile-container p {
+            font-size: 1.5em;
+        }
+
+        .img-logo {
+            display: block;
+            margin: 0 auto;
+        }
+
+    </style>
+</head>
+
+<body>
+    <!-- 第一部分：横幅 -->
+    <header class="bg-blue-500 fixed top-0 left-0 w-full z-50">
+        <div class="flex justify-between items-center px-4 py-2">
+            <div class="text-white text-xl">上海老风车广告传媒</div>
+            <button id="dropdownButton" class="text-white focus:outline-none">更多信息</button>
+            <div id="dropdownMenu" class="dropdown-menu">
+                <a href="#" class="block px-4 py-2 hover:bg-gray-100">关于我们</a>
+                <a href="#" class="block px-4 py-2 hover:bg-gray-100">联系我们</a>
+                <a href="#" class="block px-4 py-2 hover:bg-gray-100">最新动态</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 第二部分：第一行四个水平排列的图片组件 -->
+    <section class="mt-24 grid grid-cols-4" id="first-row-images">
+        <div class="image-hover-zoom">
+            <div class="image-container">
+                <img src="resource/case01-00.jpg" alt="Image 1">
+                <div class="absolute bottom-4 left-2 text-white">
+                    <p class="text-2xl font-bold", id="first-row-images-1-text1">Microft</p>
+                    <p class="text-lg", id="first-row-images-1-text2">The Everyday Tactician</p>
+                </div>
+            </div>
+        </div>
+        <div class="image-hover-zoom">
+            <div class="image-container">
+                <img src="resource/case01-01.jpg" alt="Image 2">
+                <div class="absolute bottom-4 left-2 text-white">
+                    <p class="text-2xl font-bold", id="first-row-images-2-text1">Microft</p>
+                    <p class="text-sm", id="first-row-images-2-text2">The Everyday Tactician</p>
+                </div>
+            </div>
+        </div>
+        <div class="image-hover-zoom">
+            <div class="image-container">
+                <img src="resource/case01-02.jpg" alt="Image 3">
+                <div class="absolute bottom-4 left-2 text-white">
+                    <p class="text-2xl font-bold", id="first-row-images-3-text1">Microft</p>
+                    <p class="text-lg", id="first-row-images-3-text2">The Everyday Tactician</p>
+                </div>
+            </div>
+        </div>
+        <div class="image-hover-zoom">
+            <div class="image-container">
+                <img src="resource/case01-03.jpg" alt="Image 4">
+                <div class="absolute bottom-4 left-2 text-white">
+                    <p class="text-2xl font-bold", id="first-row-images-4-text1">Microft</p>
+                    <p class="text-lg", id="first-row-images-4-text2">The Everyday Tactician</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 第三部分：详细信息部分 -->
+    <section class="detail-section-container w-full", id="detail-section-container" >
+        <section class="flex" id="detail-section">
+            <div class="w-full">
+                <div class="button-row">
+                    <div>
+                        <button id="detail-section-button-pre">&lt;</button>
+                        <button id="detail-section-button-next">&gt;</button>
+                    </div>
+                    <button id="detail-section-button-close">X</button>
+                </div>
+                <div class="text-video-row">
+                    <div class="text-container">
+                        <p class="text-lg font-bold", id="detail-section-text-customer">Microsoft</p>
+                        <p class="text-lg font-bold">-</p>
+                        <p class="text-4xl font-bold", id="detail-section-text-casename">The Everyday Tactician</p>
+                        <p class="text-lg">Modern football is dominated by a few rich clubs, the ones that can afford to hire big teams of coaches and analysts - meaning smaller clubs have to struggle to compete for talent. So for the launch of “Football Manager 24,” the latest edition of the most realistic video game to simulate what it’s like to manage a soccer team – Xbox decided to help the small club Bromley FC recruit its next tactician from an untapped talent pool: gamers.</p>
+                    </div>
+                    <div class="video-container">
+                        <video width="100%" height="auto" controls>
+                            <source src="resource/case01-00-video.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
+
+    <!--第四部分：第二行四个水平排列的图片组件 -->
+    <section class="grid grid-cols-4" id="second-row-images">
+        <div class="image-hover-zoom">
+            <div class="image-container">
+                <img src="resource/case02-00.jpg" alt="Image 5">
+                <div class="absolute bottom-4 left-2 text-white">
+                    <p class="text-2xl font-bold", id="second-row-images-1-text1">Microft</p>
+                    <p class="text-lg", id="second-row-images-1-text2">The Everyday Tactician</p>
+                </div>
+            </div>
+        </div>
+        <div class="image-hover-zoom">
+            <div class="image-container">
+                <img src="resource/case02-01.jpg" alt="Image 6">
+                <div class="absolute bottom-4 left-2 text-white">
+                    <p class="text-2xl font-bold", id="second-row-images-2-text1">Microft</p>
+                    <p class="text-lg", id="second-row-images-2-text2">The Everyday Tactician</p>
+                </div>
+            </div>
+        </div>
+        <div class="image-hover-zoom">
+            <div class="image-container">
+                <img src="resource/case02-02.jpg" alt="Image 7">
+                <div class="absolute bottom-4 left-2 text-white">
+                    <p class="text-2xl font-bold", id="second-row-images-3-text1">Microft</p>
+                    <p class="text-lg", id="second-row-images-3-text2">The Everyday Tactician</p>
+                </div>
+            </div>
+        </div>
+        <div class="image-hover-zoom">
+            <div class="image-container">
+                <img src="resource/case02-03.jpg" alt="Image 8">
+                <div class="absolute bottom-4 left-2 text-white">
+                    <p class="text-2xl font-bold", id="second-row-images-4-text1">Microft</p>
+                    <p class="text-lg", id="second-row-images-4-text2">The Everyday Tactician</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 第五部分：第三行四个水平排列的图片组件 -->
+    <section class="grid grid-cols-4" id="third-row-images">
+        <div class="image-hover-zoom">
+            <div class="image-container">
+                <img src="resource/case03-00.jpg" alt="Image 9">
+                <div class="absolute bottom-4 left-2 text-white">
+                    <p class="text-2xl font-bold", id="third-row-images-1-text1">Microft</p>
+                    <p class="text-lg", id="third-row-images-1-text2">The Everyday Tactician</p>
+                </div>
+            </div>
+        </div>
+        <div class="image-hover-zoom">
+            <div class="image-container">
+                <img src="resource/case03-01.jpg" alt="Image 10">
+                <div class="absolute bottom-4 left-2 text-white">
+                    <p class="text-2xl font-bold", id="third-row-images-2-text1">Microft</p>
+                    <p class="text-lg", id="third-row-images-2-text2">The Everyday Tactician</p>
+                </div>
+            </div>
+        </div>
+        <div class="image-hover-zoom">
+            <div class="image-container">
+                <img src="resource/case03-02.jpg" alt="Image 11">
+                <div class="absolute bottom-4 left-2 text-white">
+                    <p class="text-2xl font-bold", id="third-row-images-3-text1">Microft</p>
+                    <p class="text-lg", id="third-row-images-3-text2">The Everyday Tactician</p>
+                </div>
+            </div>
+        </div>
+        <div class="image-hover-zoom">
+            <div class="image-container">
+                <img src="resource/case03-03.jpg" alt="Image 12">
+                <div class="absolute bottom-4 left-2 text-white">
+                    <p class="text-2xl font-bold", id="third-row-images-4-text1">Microft</p>
+                    <p class="text-lg", id="third-row-images-4-text2">The Everyday Tactician</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 公司介绍 -->
+    <section class="p-4" id="company-profile-container">
+        <p class="text-sm text-gray-700 px-60 py-4", id="company-profile">&nbsp;&nbsp;&nbsp;&nbsp;上海老风车广告传媒有限公司是一家集品牌战略咨询与设计、新媒体全案运营、大型活动创意及执行、影视拍摄广告制作、政务类服务、文创设计及开发、VR技术及智库等为一体的全媒体传播公司。涉足传媒领域20余年，合作品牌涵盖亿滋、可口可乐、麦当劳等大型跨国企业，及中国商飞、上海机场集团在内的大型央企、国有企业，拥有新民晚报、中国网、东方网在内的强力媒体伙伴，为品牌提供全网融合的矩阵式营销。公司致力于在企业公共关系领域为客户提升和优化品牌形象，为企业声誉创造最佳的传播环境。在帮助客户维护品牌声誉的同时，通过准确决策和信息交往等活动提升企业品牌的知名度、信任度和美誉度。</p>
+    </section>
+
+    <!-- 公司logo-->
+    <img src="resource/lfclogo.png" alt="公司logo" class="img-logo"" id="company-logo">
+
+    <!-- 公司业务-->
+    <img src="resource/business.png" alt="公司业务" class="img-logo w-full mt-4" id="company-business">
+
+    <!-- 公司客户-->
+    <img src="resource/customers.png" alt="公司客户" class="img-logo w-full mt-4" id="company-customers">
+    
+    <!-- 底部组合控件 -->
+    <div class="bg-blue-500 mt-8 p-4">
+        <div class="flex justify-between">
+            <div class="flex flex-col items-center w-1/4">
+                <div class="flex items-center">
+                    <img src="resource/address.svg" class="px-2 w-12 h-12">
+                    <span class="text-white">上海市闵行区沪闵路7940号1508室</span>
+                </div>
+            </div>
+            <div class="flex flex-col items-center w-1/4">
+                <div class="flex items-center">
+                    <img src="resource/phone.svg" class="px-2 w-12 h-12">
+                    <span class="text-white">联系电话：021-64366234</span>
+                </div>
+            </div>
+            <div class="flex flex-col items-center w-1/4">
+                <div class="flex items-center">
+                    <img src="resource/worktime.svg" class="px-2 w-12 h-12">
+                    <span class="text-white">工作时间：09:00—18:00</span>
+                </div>
+            </div>
+            <div class="flex flex-col items-center w-1/4">
+                <div class="flex items-center">
+                    <img src="resource/email.svg" class="px-2 w-12 h-12">
+                    <span class="text-white">windmill6688@163.com</span>
+                </div>
+            </div>
+        </div>
+        <!-- 下面一行组合控件 -->
+        <div class="flex justify-center mt-4">
+            <div class="flex items-center">
+                <img src="resource/public_security_icon.png" class="px-2">
+                <a href="https://beian.mps.gov.cn/#/query/webSearch?code=31011202020893" class="text-white" target="_blank">沪公网安备31011202020893号 沪ICP备20022418号-1</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const banner = document.querySelector('header.bg-blue-500');
+        const dropdownButton = document.getElementById('dropdownButton');
+        const dropdownMenu = document.getElementById('dropdownMenu');
+        const firstRowImages = document.getElementById('first-row-images');
+        const detailSectionContainer = document.getElementById('detail-section-container');
+        const detailSection = document.getElementById('detail-section');
+        const closeButton = document.getElementById('detail-section-button-close');
+        const secondRowImages = document.getElementById('second-row-images');
+
+        const SlideDownShinkUpDuration = 320;
+		const SlideDownShinkUpInterval = 16;
+		const SlideDownShinkUpTimes = SlideDownShinkUpDuration/SlideDownShinkUpInterval;
+		function genAnimationSpeedBaseData(isSlideDown){
+			const duration = SlideDownShinkUpDuration;
+			const intervalTime = SlideDownShinkUpInterval;
+			const times = SlideDownShinkUpTimes;
+			const speedBaseData = new Array(times);
+			for (let i = 1; i <= speedBaseData.length; i++) {
+				var x = i*1.0/(times*1.0);
+				speedBaseData[i-1] = 1.0 -(1-x)*(1-x)*(1-x)*(1-x);
+				if(isSlideDown==0){
+					speedBaseData[i-1] = 0 - speedBaseData[i-1];
+				}
+			}
+			speedBaseData[speedBaseData.length - 1] = 1;
+			if(isSlideDown==0){
+				speedBaseData[speedBaseData.length - 1] = -1;
+			}
+			return speedBaseData;
+		}
+		const speedBaseData_SlideDown = genAnimationSpeedBaseData(1);
+		const speedBaseData_ShinkUp = genAnimationSpeedBaseData(0);
+
+		function genAnimationSpeedData(isSlideDown, distance){
+			const speedBaseData = isSlideDown?speedBaseData_SlideDown:speedBaseData_ShinkUp;
+			var speedData = new Array(speedBaseData.length);
+			for(let i=0; i<speedData.length; i++){
+				speedData[i] = distance * speedBaseData[i];
+			}
+			return speedData;
+		}
+
+		function slideDown_ShinkUp(isSlideDown, objContainer, objAbsolute){
+			const absoluteOffsetHeight = parseInt(objAbsolute.offsetHeight) || 0;
+			const containerOffsetHeight = parseInt(objContainer.offsetHeight) || 0;	
+			const speedData = genAnimationSpeedData(isSlideDown, absoluteOffsetHeight);
+            
+            if(isSlideDown==0){
+                objContainer.style.zIndex = `-1`;
+            }
+
+			var stepIndex = 0;
+			const animationId = setInterval(() => {
+			  if (stepIndex >= SlideDownShinkUpTimes) {
+				clearInterval(animationId);
+                console.log("clearInterval");
+                if(isSlideDown==1){
+                    objContainer.style.zIndex = `0`;
+                }
+			  }else{
+                console.log(`stepIndex: ${stepIndex}`);
+				objContainer.style.height = `${containerOffsetHeight + speedData[stepIndex]}px`;
+				stepIndex++;
+			  }
+			}, SlideDownShinkUpInterval);
+        }
+
+        // 获取所有图片组件
+        const allImageDivs = document.querySelectorAll('.image-hover-zoom');
+        function SlideDown(){
+            slideDown_ShinkUp(1, detailSectionContainer, detailSection);
+        }
+        function ShinkUp(){
+            slideDown_ShinkUp(0, detailSectionContainer, detailSection);
+        }
+        function ScrollToFirstRowImagesBottom(){
+            const bannerHeight = banner.offsetHeight;
+            console.log(`banner.offsetHeight: ${banner.offsetHeight}, firstRowImages.offsetTop: ${firstRowImages.offsetTop}, firstRowImages.offsetHeight: ${firstRowImages.offsetHeight}`);
+            window.scrollTo({
+                top: firstRowImages.offsetTop + firstRowImages.offsetHeight - bannerHeight,
+                behavior: 'smooth'
+            });
+        }
+        allImageDivs.forEach((div) => {
+                div.addEventListener('click', () => {
+                SlideDown();
+                ScrollToFirstRowImagesBottom();
+            });
+        });
+
+        // 给关闭按钮添加点击事件
+        closeButton.addEventListener('click', () => {
+            ShinkUp();
+            ScrollToFirstRowImagesBottom();
+        });
+
+        // 给 More 按钮添加点击事件
+        dropdownButton.addEventListener('click', (event) => {
+            event.stopPropagation();
+            dropdownMenu.classList.toggle('show');
+        });
+
+        // 点击页面其他地方关闭下拉菜单
+        document.addEventListener('click', (event) => {
+            if (!dropdownButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                dropdownMenu.classList.remove('show');
+            }
+        });
+    </script>
+</body>
+
+</html>
