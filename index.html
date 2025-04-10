@@ -197,17 +197,17 @@
             <div class="w-full">
                 <div class="button-row">
                     <div>
-                        <button id="detail-section-button-pre">&lt;</button>
-                        <button id="detail-section-button-next">&gt;</button>
+                        <button class="font-awesome text-2xl" id="detail-section-button-pre">&lt;</button>
+                        <button class="font-awesome text-2xl" id="detail-section-button-next">&gt;</button>
                     </div>
-                    <button id="detail-section-button-close">X</button>
+                    <button class="font-awesome text-2xl" id="detail-section-button-close">X</button>
                 </div>
                 <div class="text-video-row">
                     <div class="text-container">
-                        <p class="text-2xl font-bold", id="detail-section-text-customer">Microsoft</p>
-                        <p class="text-2xl font-bold">-</p>
-                        <p class="text-4xl font-bold", id="detail-section-text-casename">The Everyday Tactician</p>
-                        <p class="text-2xl", id="detail-section-text-caseDetail">The announcement made headlines everywhere and people from around the world applied. Nathan Owolabi, a dedicated “Football Manager” player, got the job. He used the data skills he honed while playing the game to help the club in the real world: developing formations, finding new strategies and uncovering the opposition’s weaknesses. The story of this unusual approach to football was told in a documentary series on TNT Sports, the U.K.’s biggest sports broadcaster.With the help of a data-savvy gamer, the club achieved the best season ever and was promoted to League Two for the first time in its 132-year history. Perhaps more important, Xbox saw a dramatic increase in gamers playing “Football Manager” on the console, and “Football Manager 24” became the most played edition in the history of the game franchise.</p>
+                        <p class="text-2xl font-bold", id="detail-section-text-customer"></p>
+                        <p class="text-2xl font-bold">——</p>
+                        <p class="text-4xl font-bold", id="detail-section-text-casename"></p>
+                        <p class="text-2xl", id="detail-section-text-caseDetail"></p>
                     </div>
                     <div class="video-container">
                         <video width="100%" height="auto" id="detail-section-video" controls>
@@ -373,6 +373,7 @@
         const caseVideos = ["resource/case01-00-video.mp4","resource/case01-01-video.mp4","resource/case01-02-video.mp4","resource/case01-03-video.mp4",
                             "resource/case02-00-video.mp4","resource/case02-01-video.mp4","resource/case02-02-video.mp4","resource/case02-03-video.mp4",
                             "resource/case03-00-video.mp4","resource/case03-01-video.mp4","resource/case03-02-video.mp4","resource/case03-03-video.mp4"];
+        let curCaseIndex = -1;
         const banner = document.querySelector('header.bg-blue-500');
         const dropdownButton = document.getElementById('dropdownButton');
         const dropdownMenu = document.getElementById('dropdownMenu');
@@ -383,6 +384,8 @@
         const caseName = document.getElementById('detail-section-text-casename');
         const caseDetail = document.getElementById('detail-section-text-caseDetail');
         const caseVideo = document.getElementById('detail-section-video');
+        const nextButton = document.getElementById('detail-section-button-next');
+        const preButton = document.getElementById('detail-section-button-pre');
         const closeButton = document.getElementById('detail-section-button-close');
         const secondRowImages = document.getElementById('second-row-images');
 
@@ -420,10 +423,13 @@
 		}
 
 		function slideDown_ShinkUp(isSlideDown, objContainer, objAbsolute){
-			const absoluteOffsetHeight = parseInt(objAbsolute.offsetHeight) || 0;
-			const containerOffsetHeight = parseInt(objContainer.offsetHeight) || 0;	
+            const containerOffsetHeight = parseInt(objContainer.offsetHeight) || 0;
+			const absoluteOffsetHeight = isSlideDown==0?containerOffsetHeight:parseInt(objAbsolute.offsetHeight) || 0;
+
 			const speedData = genAnimationSpeedData(isSlideDown, absoluteOffsetHeight);
-            
+            //console.log(`objContainer: clientHeight=${objContainer.clientHeight}, offsetHeight=${objContainer.offsetHeight}, scrollHeight=${objContainer.scrollHeight}, rect.height=${objContainer.getBoundingClientRect().height}`);
+            //console.log(`objAbsolute: clientHeight=${objAbsolute.clientHeight}, offsetHeight=${objAbsolute.offsetHeight}, scrollHeight=${objAbsolute.scrollHeight}, rect.height=${objAbsolute.getBoundingClientRect().height}`);
+
             if(isSlideDown==0){
                 objContainer.style.zIndex = `-1`;
             }
@@ -440,18 +446,20 @@
                 //console.log(`stepIndex: ${stepIndex}`);
 				objContainer.style.height = `${containerOffsetHeight + speedData[stepIndex]}px`;
 				stepIndex++;
+                //console.log(`objContainer.style.height: ${objContainer.style.height}`);
 			  }
 			}, SlideDownShinkUpInterval);
         }
 
-        // 获取所有图片组件
         const allImageDivs = document.querySelectorAll('.image-hover-zoom');
         function SlideDown(){
             slideDown_ShinkUp(1, detailSectionContainer, detailSection);
         }
+        
         function ShinkUp(){
             slideDown_ShinkUp(0, detailSectionContainer, detailSection);
         }
+
         function ScrollToFirstRowImagesBottom(){
             const bannerHeight = banner.offsetHeight;
             console.log(`banner.offsetHeight: ${banner.offsetHeight}, firstRowImages.offsetTop: ${firstRowImages.offsetTop}, firstRowImages.offsetHeight: ${firstRowImages.offsetHeight}`);
@@ -460,22 +468,86 @@
                 behavior: 'smooth'
             });
         }
-        allImageDivs.forEach((div, index) => {
-                div.addEventListener('click', () => {
-                caseCustomer.textContent = `${caseCustomers[index]}`;
-                caseName.textContent = `${caseNames[index]}`;
-                caseDetail.textContent = `${caseDetailDescriptors[index]}`;
+
+        function isDetailSectionOpened(){
+            return -1<curCaseIndex && curCaseIndex<caseCustomers.length;
+        }
+
+        function isSameCase(index){
+            return curCaseIndex==index;
+        }
+
+        function fillDetailSection(index){
+            caseCustomer.textContent = `${caseCustomers[index]}`;
+            caseName.textContent = `${caseNames[index]}`;
+            caseDetail.textContent = `${caseDetailDescriptors[index]}`;
+            if(caseVideo.src!==`${caseVideos[index]}`){
                 caseVideo.src = `${caseVideos[index]}`;
                 caseVideo.load();
                 caseVideo.play();
-                SlideDown();
-                ScrollToFirstRowImagesBottom();
+            }
+        }
+
+        function resetDetailSection(){
+            caseCustomer.textContent = "";
+            caseName.textContent = "";
+            caseDetail.textContent = "";
+            caseVideo.pause();
+        }
+
+        function openDetailSection(index){
+            if(index==curCaseIndex){
+                return false;
+            }
+
+            fillDetailSection(index);
+            curCaseIndex = index;
+            return true;
+        }
+
+        function closeDetailSection(){
+            resetDetailSection();
+            curCaseIndex = -1;
+        }
+
+        function openNextDetailSection(){
+            let nextIndex = curCaseIndex + 1;
+            console.log(`curCaseIndex:${curCaseIndex}, nextIndex:${nextIndex}`);
+            if(nextIndex>=caseVideos.length){
+                nextIndex = 0;
+            }
+            return openDetailSection(nextIndex);
+        }
+
+        function openPreDetailSection(){
+            let preIndex = curCaseIndex - 1;
+            if(preIndex<0){
+                preIndex = caseVideos.length - 1;
+            }
+            return openDetailSection(preIndex);
+        }
+
+        allImageDivs.forEach((div, index) => {
+                div.addEventListener('click', () => {
+                const isOpened = openDetailSection(index);
+                if(isOpened){
+                    SlideDown();
+                    ScrollToFirstRowImagesBottom();
+                }
             });
         });
 
+        nextButton.addEventListener('click', ()=>{
+            console.log("nextButton.addEventListener");
+            openNextDetailSection();
+        });
+        preButton.addEventListener('click', ()=>{
+            console.log("preButton.addEventListener");
+            openPreDetailSection();
+        });
         // 给关闭按钮添加点击事件
         closeButton.addEventListener('click', () => {
-            caseVideo.pause();
+            closeDetailSection();
             ShinkUp();
             ScrollToFirstRowImagesBottom();
         });
