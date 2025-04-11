@@ -101,19 +101,16 @@
             margin-top: 0;
         }
 
-        .detail-section-container {
+        .slide_shink_class {
+            max-height: 0;
+            overflow: hidden;
+            /*cubic-bezier(0.68, -0.6, 0.32, 1.6)cubic-bezier(0.5, 1.5, 0.89, 1)cubic-bezier(0.33, 0, 0.67, -0.5)*/
+            transition: max-height 0.48s ease-out;
             position: relative;
-            z-index: -1;
         }
-
-        /* 详细信息部分初始不可见 */
-        #detail-section {
-            position: absolute;
-        }
-
-        #detail-section.show {
-            display: flex;
-            opacity: 1;
+        .slide_shink_class.show {
+            max-height: 9999px;
+            transition: max-height 0.48s  ease-out;
         }
 
         /* 详细信息部分按钮行样式 */
@@ -220,32 +217,30 @@
     </section>
 
     <!-- 第三部分：详细信息部分 -->
-    <section class="detail-section-container w-full", id="detail-section-container" >
-        <section class="flex" id="detail-section">
-            <div class="w-full">
-                <div class="button-row">
-                    <div>
-                        <button class="font-awesome text-2xl" id="detail-section-button-pre">&lt;</button>
-                        <button class="font-awesome text-2xl" id="detail-section-button-next">&gt;</button>
-                    </div>
-                    <button class="font-awesome text-2xl" id="detail-section-button-close">X</button>
+    <section class="slide_shink_class flex w-full" id="detail-section" >
+        <div class="w-full">
+            <div class="button-row">
+                <div>
+                    <button class="font-awesome text-2xl" id="detail-section-button-pre">&lt;</button>
+                    <button class="font-awesome text-2xl" id="detail-section-button-next">&gt;</button>
                 </div>
-                <div class="text-video-row">
-                    <div class="text-container">
-                        <p class="text-2xl font-bold", id="detail-section-text-customer"></p>
-                        <p class="text-2xl font-bold">——</p>
-                        <p class="text-4xl font-bold", id="detail-section-text-casename"></p>
-                        <p class="text-2xl", id="detail-section-text-caseDetail"></p>
-                    </div>
-                    <div class="video-container">
-                        <video width="100%" height="auto" id="detail-section-video" controls>
-                            <source src="resource/case01-00-video.mp4" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
-                    </div>
+                <button class="font-awesome text-2xl" id="detail-section-button-close">X</button>
+            </div>
+            <div class="text-video-row">
+                <div class="text-container">
+                    <p class="text-2xl font-bold", id="detail-section-text-customer"></p>
+                    <p class="text-2xl font-bold">——</p>
+                    <p class="text-4xl font-bold", id="detail-section-text-casename"></p>
+                    <p class="text-2xl", id="detail-section-text-caseDetail"></p>
+                </div>
+                <div class="video-container">
+                    <video width="100%" height="auto" id="detail-section-video" controls>
+                        <source src="resource/case01-00-video.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
                 </div>
             </div>
-        </section>
+        </div>
     </section>
 
     <!--第四部分：第二行四个水平排列的图片组件 -->
@@ -408,7 +403,6 @@
         let isMoreInfoExpanded = false;
         const moreInfoIcon = document.getElementById('moreInfoIcon');
         const firstRowImages = document.getElementById('first-row-images');
-        const detailSectionContainer = document.getElementById('detail-section-container');
         const detailSection = document.getElementById('detail-section');
         const caseCustomer = document.getElementById('detail-section-text-customer');
         const caseName = document.getElementById('detail-section-text-casename');
@@ -418,90 +412,56 @@
         const preButton = document.getElementById('detail-section-button-pre');
         const closeButton = document.getElementById('detail-section-button-close');
         const secondRowImages = document.getElementById('second-row-images');
+        const allImageDivs = document.querySelectorAll('.image-hover-zoom');
 
         function setFirstRowImagesMr() {
             firstRowImages.style.marginTop = `${banner.offsetHeight}px`;
         }
 
+        function OnWindowLoad(){
+            setFirstRowImagesMr();
+        }
+
+        function OnWindowResized(){
+            console.log('OnWindowResized');
+            setFirstRowImagesMr();
+            const slide_shink_objs = document.querySelectorAll('.slide_shink_class.show');
+            slide_shink_objs.forEach(function(slide_shink_obj) {
+                // 强制重排以获取正确的高度
+                void slide_shink_obj.offsetHeight;
+                // 获取实际高度
+                const actualHeight = slide_shink_obj.scrollHeight;
+                // 设置实际高度
+                slide_shink_obj.style.maxHeight = actualHeight + 'px';
+                console.log(`OnWindowResized slide_shink_obj.style.maxHeight=${slide_shink_obj.style.maxHeight}`);
+            });
+        }
+
         // 页面加载时设置初始边距
-        window.addEventListener('load', setFirstRowImagesMr);
+        window.addEventListener('load', OnWindowLoad);
         // 窗口大小改变时重新设置边距
-        window.addEventListener('resize', setFirstRowImagesMr);
+        window.addEventListener('resize', OnWindowResized);
 
-        const SlideDownShinkUpDuration = 320;
-		const SlideDownShinkUpInterval = 16;
-		const SlideDownShinkUpTimes = SlideDownShinkUpDuration/SlideDownShinkUpInterval;
-		function genAnimationSpeedBaseData(isSlideDown){
-			const duration = SlideDownShinkUpDuration;
-			const intervalTime = SlideDownShinkUpInterval;
-			const times = SlideDownShinkUpTimes;
-			const speedBaseData = new Array(times);
-			for (let i = 1; i <= speedBaseData.length; i++) {
-				var x = i*1.0/(times*1.0);
-				speedBaseData[i-1] = 1.0 -(1-x)*(1-x)*(1-x)*(1-x);
-				if(isSlideDown==0){
-					speedBaseData[i-1] = 0 - speedBaseData[i-1];
-				}
-			}
-			speedBaseData[speedBaseData.length - 1] = 1;
-			if(isSlideDown==0){
-				speedBaseData[speedBaseData.length - 1] = -1;
-			}
-			return speedBaseData;
-		}
-		const speedBaseData_SlideDown = genAnimationSpeedBaseData(1);
-		const speedBaseData_ShinkUp = genAnimationSpeedBaseData(0);
-
-		function genAnimationSpeedData(isSlideDown, distance){
-			const speedBaseData = isSlideDown?speedBaseData_SlideDown:speedBaseData_ShinkUp;
-			var speedData = new Array(speedBaseData.length);
-			for(let i=0; i<speedData.length; i++){
-				speedData[i] = distance * speedBaseData[i];
-			}
-			return speedData;
-		}
-
-		function slideDown_ShinkUp(isSlideDown, objContainer, objAbsolute){
-            const containerOffsetHeight = parseInt(objContainer.offsetHeight) || 0;
-			const absoluteOffsetHeight = isSlideDown==0?containerOffsetHeight:parseInt(objAbsolute.offsetHeight) || 0;
-
-			const speedData = genAnimationSpeedData(isSlideDown, absoluteOffsetHeight);
-            //console.log(`objContainer: clientHeight=${objContainer.clientHeight}, offsetHeight=${objContainer.offsetHeight}, scrollHeight=${objContainer.scrollHeight}, rect.height=${objContainer.getBoundingClientRect().height}`);
-            //console.log(`objAbsolute: clientHeight=${objAbsolute.clientHeight}, offsetHeight=${objAbsolute.offsetHeight}, scrollHeight=${objAbsolute.scrollHeight}, rect.height=${objAbsolute.getBoundingClientRect().height}`);
-
-            if(isSlideDown==0){
-                objContainer.style.zIndex = `-1`;
-            }
-
-			var stepIndex = 0;
-			const animationId = setInterval(() => {
-			  if (stepIndex >= SlideDownShinkUpTimes) {
-				clearInterval(animationId);
-                //console.log("clearInterval");
-                if(isSlideDown==1){
-                    objContainer.style.zIndex = `0`;
-                }
-			  }else{
-                //console.log(`stepIndex: ${stepIndex}`);
-				objContainer.style.height = `${containerOffsetHeight + speedData[stepIndex]}px`;
-				stepIndex++;
-                //console.log(`objContainer.style.height: ${objContainer.style.height}`);
-			  }
-			}, SlideDownShinkUpInterval);
-        }
-
-        const allImageDivs = document.querySelectorAll('.image-hover-zoom');
         function SlideDown(){
-            slideDown_ShinkUp(1, detailSectionContainer, detailSection);
+            detailSection.classList.add('show');
+            void detailSection.offsetHeight;
+            const actualHeight = detailSection.scrollHeight;
+            detailSection.style.maxHeight = actualHeight + 'px';
         }
-        
+
         function ShinkUp(){
-            slideDown_ShinkUp(0, detailSectionContainer, detailSection);
+            detailSection.style.maxHeight = '0';
+            detailSection.classList.remove('show');
+            const onTransitionEnd = () => {
+                closeDetailSection();
+                detailSection.removeEventListener('transitionend', onTransitionEnd);
+            };
+            detailSection.addEventListener('transitionend', onTransitionEnd);
         }
 
         function ScrollToFirstRowImagesBottom(){
             const bannerHeight = banner.offsetHeight;
-            console.log(`banner.offsetHeight: ${banner.offsetHeight}, firstRowImages.offsetTop: ${firstRowImages.offsetTop}, firstRowImages.offsetHeight: ${firstRowImages.offsetHeight}`);
+            //console.log(`banner.offsetHeight: ${banner.offsetHeight}, firstRowImages.offsetTop: ${firstRowImages.offsetTop}, firstRowImages.offsetHeight: ${firstRowImages.offsetHeight}`);
             window.scrollTo({
                 top: firstRowImages.offsetTop + firstRowImages.offsetHeight - bannerHeight,
                 behavior: 'smooth'
@@ -576,19 +536,26 @@
             });
         });
 
+        closeButton.addEventListener('click', () => {
+            ShinkUp();
+            ScrollToFirstRowImagesBottom();
+        });
+
         nextButton.addEventListener('click', ()=>{
             console.log("nextButton.addEventListener");
-            openNextDetailSection();
+            const isOpened = openNextDetailSection();
+            if(isOpened){
+                SlideDown();
+                ScrollToFirstRowImagesBottom();
+            }
         });
         preButton.addEventListener('click', ()=>{
             console.log("preButton.addEventListener");
-            openPreDetailSection();
-        });
-        // 给关闭按钮添加点击事件
-        closeButton.addEventListener('click', () => {
-            closeDetailSection();
-            ShinkUp();
-            ScrollToFirstRowImagesBottom();
+            const isOpened = openPreDetailSection();
+            if(isOpened){
+                SlideDown();
+                ScrollToFirstRowImagesBottom();
+            }
         });
 
         function toggleMoreInfo() {
@@ -610,14 +577,12 @@
             }
         }
 
-        // 给 More 按钮添加点击事件
         dropdownButton.addEventListener('click', (event) => {
             event.stopPropagation();
             dropdownMenu.classList.toggle('show');
             toggleMoreInfo();
         });
 
-        // 点击页面其他地方关闭下拉菜单
         document.addEventListener('click', (event) => {
             if (!dropdownButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
                 dropdownMenu.classList.remove('show');
