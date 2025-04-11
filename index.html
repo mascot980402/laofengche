@@ -338,7 +338,7 @@
     <img src="resource/customers.png" alt="公司客户" class="img-logo w-full mt-4" id="company-customers">
     
     <!-- 底部组合控件 -->
-    <div class="bg-[#0767FF] mt-8 p-4">
+    <div class="bg-[#0767FF] mt-4 p-1">
         <div class="flex justify-between">
             <div class="flex flex-col items-center w-1/4">
                 <div class="flex items-center">
@@ -366,7 +366,7 @@
             </div>
         </div>
         <!-- 下面一行组合控件 -->
-        <div class="flex justify-center mt-4">
+        <div class="flex justify-center mt-0">
             <div class="flex items-center">
                 <img src="resource/public_security_icon.png" class="px-2">
                 <a href="https://beian.mps.gov.cn/#/query/webSearch?code=31011202020893" class="text-white" target="_blank">沪公网安备31011202020893号 沪ICP备20022418号-1</a>
@@ -447,6 +447,14 @@
             void detailSection.offsetHeight;
             const actualHeight = detailSection.scrollHeight;
             detailSection.style.maxHeight = actualHeight + 'px';
+            const onVideoLoadedMetadata = () => {
+                void detailSection.offsetHeight;
+                const actualHeight = detailSection.scrollHeight;
+                detailSection.style.maxHeight = actualHeight + 'px';
+                caseVideo.removeEventListener('loadedmetadata', onVideoLoadedMetadata);
+            };
+
+            caseVideo.addEventListener('loadedmetadata', onVideoLoadedMetadata);
         }
 
         function ShinkUp(){
