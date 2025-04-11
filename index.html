@@ -87,7 +87,7 @@
 
         #first-row-images {
             position: relative;
-            margin-top: 3rem;
+            margin-top: 0px;
             overflow: hidden;
         }
 
@@ -151,9 +151,10 @@
             width: 60%;
         }
 
-        /* 最后一个文本组件字体放大到原来的 3 倍 */
-        #company-profile-container p {
-            font-size: 1.5em;
+        .text-rect-center {
+            width: 80%;
+            margin: 0 auto;
+            text-align: left;
         }
 
         .img-logo {
@@ -328,9 +329,9 @@
     </section>
 
     <!-- 公司介绍 -->
-    <section class="p-4" id="company-profile-container">
-        <p class="text-sm text-gray-700 px-60 py-4", id="company-profile">&nbsp;&nbsp;&nbsp;&nbsp;上海老风车广告传媒有限公司是一家集品牌战略咨询与设计、新媒体全案运营、大型活动创意及执行、影视拍摄广告制作、政务类服务、文创设计及开发、VR技术及智库等为一体的全媒体传播公司。涉足传媒领域20余年，合作品牌涵盖亿滋、可口可乐、麦当劳等大型跨国企业，及中国商飞、上海机场集团在内的大型央企、国有企业，拥有新民晚报、中国网、东方网在内的强力媒体伙伴，为品牌提供全网融合的矩阵式营销。公司致力于在企业公共关系领域为客户提升和优化品牌形象，为企业声誉创造最佳的传播环境。在帮助客户维护品牌声誉的同时，通过准确决策和信息交往等活动提升企业品牌的知名度、信任度和美誉度。</p>
-    </section>
+    <div class="text-rect-center text-2xl text-gray-700 py-8" id="company-profile">
+        &nbsp;&nbsp;&nbsp;&nbsp;上海老风车广告传媒有限公司是一家集品牌战略咨询与设计、新媒体全案运营、大型活动创意及执行、影视拍摄广告制作、政务类服务、文创设计及开发、VR技术及智库等为一体的全媒体传播公司。涉足传媒领域20余年，合作品牌涵盖亿滋、可口可乐、麦当劳等大型跨国企业，及中国商飞、上海机场集团在内的大型央企、国有企业，拥有新民晚报、中国网、东方网在内的强力媒体伙伴，为品牌提供全网融合的矩阵式营销。公司致力于在企业公共关系领域为客户提升和优化品牌形象，为企业声誉创造最佳的传播环境。在帮助客户维护品牌声誉的同时，通过准确决策和信息交往等活动提升企业品牌的知名度、信任度和美誉度。
+    </div>
 
     <!-- 公司logo-->
     <img src="resource/lfclogo.png" alt="公司logo" class="img-logo"" id="company-logo">
@@ -417,6 +418,15 @@
         const preButton = document.getElementById('detail-section-button-pre');
         const closeButton = document.getElementById('detail-section-button-close');
         const secondRowImages = document.getElementById('second-row-images');
+
+        function setFirstRowImagesMr() {
+            firstRowImages.style.marginTop = `${banner.offsetHeight}px`;
+        }
+
+        // 页面加载时设置初始边距
+        window.addEventListener('load', setFirstRowImagesMr);
+        // 窗口大小改变时重新设置边距
+        window.addEventListener('resize', setFirstRowImagesMr);
 
         const SlideDownShinkUpDuration = 320;
 		const SlideDownShinkUpInterval = 16;
