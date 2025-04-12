@@ -1,0 +1,150 @@
+/* 定义旋转动画 */
+@keyframes rotate-icon {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(180deg);
+    }
+}
+
+@keyframes reverse-rotate-icon {
+    from {
+        transform: rotate(180deg);
+    }
+    to {
+        transform: rotate(0deg);
+    }
+}
+
+.rotate-icon {
+    animation: rotate-icon 0.3s ease-in-out forwards;
+}
+
+.reverse-rotate-icon {
+    animation: reverse-rotate-icon 0.3s ease-in-out forwards;
+}
+/* 增大横幅高度 */
+header.bg-blue-500 {
+    z-index: 999;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    background-color: #0767FF;
+}
+
+/* 下拉菜单样式 */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ccc;
+    min-width: 120px;
+    z-index: 1;
+    top: 100%;
+    right: 0;
+}
+
+.dropdown-menu.show {
+    display: block;
+}
+
+/* 图片容器样式 */
+.image-container {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position:relative;
+    cursor: pointer;
+}
+
+/* 图片悬浮动画效果 */
+.image-hover-zoom img {
+    transition: transform 0.3s ease;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform-origin: center;
+    position:relative
+}
+
+.image-hover-zoom:hover img {
+    transform: scale(1.1);
+}
+
+#first-row-images {
+    position: relative;
+    margin-top: 0px;
+    overflow: hidden;
+}
+
+/* 移除网格布局的间距 */
+.grid {
+    gap: 0;
+}
+
+/* 移除横幅和第一行图片组件间的空隙 */
+.mt-24 {
+    margin-top: 0;
+}
+
+.slide_shink_class {
+    max-height: 0;
+    overflow: hidden;
+    /*cubic-bezier(0.68, -0.6, 0.32, 1.6)cubic-bezier(0.5, 1.5, 0.89, 1)cubic-bezier(0.33, 0, 0.67, -0.5)*/
+    transition: max-height 0.48s ease-out;
+    position: relative;
+}
+.slide_shink_class.show {
+    max-height: 9999px;
+    transition: max-height 0.48s  ease-out;
+}
+
+/* 详细信息部分按钮行样式 */
+#detail-section .button-row {
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    justify-content: space-between;
+}
+
+/* 扁平化按钮样式 */
+#detail-section .button-row button {
+    background-color: transparent;
+    padding: 1.5rem 2rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* 详细信息部分文本和视频行样式 */
+#detail-section .text-video-row {
+    background-color: #f0f0f0;
+    display: flex;
+    padding: 1rem;
+    gap: 1rem;
+}
+
+#detail-section .text-video-row .text-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 40%;
+}
+
+#detail-section .text-video-row .video-container {
+    width: 60%;
+}
+
+.text-rect-center {
+    width: 80%;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.img-logo {
+    display: block;
+    margin: 0 auto;
+}
