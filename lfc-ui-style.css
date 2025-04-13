@@ -42,7 +42,7 @@ header.bg-blue-500 {
     position: absolute;
     background-color: white;
     border: 1px solid #ccc;
-    min-width: 120px;
+    /*min-width: 120px;*/
     z-index: 1;
     top: 100%;
     right: 0;
