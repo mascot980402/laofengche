@@ -52,6 +52,28 @@ header.bg-blue-500 {
     display: block;
 }
 
+/* 媒体查询，确保在手机设备上也显示垂直下拉菜单 */
+@media (max-width: 767px) {
+    .dropdown-menu {
+        display: none;
+        position: absolute;
+        background-color: white;
+        border: 1px solid #ccc;
+        min-width: 120px;
+        z-index: 1;
+        top: 100%;
+        right: 0;
+    }
+
+    .dropdown-menu.show {
+        display: block;
+    }
+
+    .dropdown-menu a {
+        display: block;
+    }
+}
+
 /* 图片容器样式 */
 .image-container {
     width: 100%;
