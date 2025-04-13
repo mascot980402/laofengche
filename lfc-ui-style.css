@@ -97,6 +97,40 @@ header.bg-blue-500 {
     transform: scale(1.1);
 }
 
+/* 定义不同屏幕宽度下的布局 */
+@media (min-width: 1280px) {
+    .composite-section-1 {
+         grid-template-columns: repeat(4, 1fr);
+     }
+
+    .composite-section-2 {
+         grid-template-columns: repeat(4, 1fr);
+         grid-template-rows: repeat(2, 1fr);
+     }
+ }
+
+ @media (min-width: 768px) and (max-width: 1279px) {
+    .composite-section-1 {
+         grid-template-columns: repeat(3, 1fr);
+     }
+
+    .composite-section-2 {
+         grid-template-columns: repeat(3, 1fr);
+         grid-template-rows: repeat(3, 1fr);
+     }
+ }
+
+ @media (max-width: 767px) {
+    .composite-section-1 {
+         grid-template-columns: repeat(1, 1fr);
+     }
+
+    .composite-section-2 {
+         grid-template-columns: repeat(1, 1fr);
+         grid-template-rows: repeat(11, 1fr);
+     }
+ }
+
 #first-row-images {
     position: relative;
     margin-top: 0px;

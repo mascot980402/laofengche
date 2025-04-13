@@ -4,6 +4,9 @@ const caseCustomers = ["Microsoft","Mastercard","McDonalds","Grupo Bimbo",
 const caseNames = ["The Everyday Tactician","Room for Everyone","After Dinner Dinner","The Greatest Guide",
     "The Gift Card of Life","Safety Mudras","AdLaM","The Non-Issue",
     "Changing The Game","True Name","Thisables","Comin Home"];
+const caseImageSrcs = ["resource/case01-00.jpg","resource/case01-01.jpg","resource/case01-02.jpg","resource/case01-03.jpg",
+    "resource/case02-00.jpg","resource/case02-01.jpg","resource/case02-02.jpg","resource/case02-03.jpg",
+    "resource/case03-00.jpg","resource/case03-01.jpg","resource/case03-02.jpg","resource/case03-03.jpg"];
 const caseDetailDescriptors = ["The announcement made headlines everywhere and people from around the world applied. Nathan Owolabi, a dedicated “Football Manager” player, got the job. He used the data skills he honed while playing the game to help the club in the real world: developing formations, finding new strategies and uncovering the opposition’s weaknesses. The story of this unusual approach to football was told in a documentary series on TNT Sports, the U.K.’s biggest sports broadcaster.With the help of a data-savvy gamer, the club achieved the best season ever and was promoted to League Two for the first time in its 132-year history. Perhaps more important, Xbox saw a dramatic increase in gamers playing “Football Manager” on the console, and “Football Manager 24” became the most played edition in the history of the game franchise.",
         "In 2023, Mastercard debuted the celebrated “Where to Settle” campaign, which leveraged data to help Ukrainian refugees in Poland find the best cities to settle in based on their personal conditions. The campaign was recognized as one of the few campaigns advancing the United Nation’s Sustainable Development Goals at the Cannes Lions Festival of Creativity.",
         "Fine dining restaurants send patrons home not just with lighter wallets, but often, with grumbling stomachs, unsatisfied by the fancy yet meager portions. McDonald’s, however, is known for bringing great taste, satisfaction and smiles to consumers—even those coming out of high-end establishments. That’s why we launched “After Dinner Dinner”—to bring joy to those left wanting after the many luxury restaurants in the UAE failed them. The activation used geolocation to identify patrons in the vicinity of top-tier establishments and surprised them with push notifications urging them to go to their nearest McDonald’s on their way home. There, they could claim a free meal by presenting their expensive check from the upmarket eatery.",
@@ -19,6 +22,54 @@ const caseDetailDescriptors = ["The announcement made headlines everywhere and p
 const caseVideos = ["resource/case01-00-video.mp4","resource/case01-01-video.mp4","resource/case01-02-video.mp4","resource/case01-03-video.mp4",
                     "resource/case02-00-video.mp4","resource/case02-01-video.mp4","resource/case02-02-video.mp4","resource/case02-03-video.mp4",
                     "resource/case03-00-video.mp4","resource/case03-01-video.mp4","resource/case03-02-video.mp4","resource/case03-03-video.mp4"];
+
+/******************************************************************************************************
+<div class="image-hover-zoom">
+    <div class="image-container">
+        <img src="resource/case01-00.jpg" alt="Image 1">
+        <div class="absolute bottom-4 left-2 text-white">
+            <p class="text-2xl font-bold", id="first-row-images-1-text1">Microft</p>
+            <p class="text-lg", id="first-row-images-1-text2">The Everyday Tactician</p>
+        </div>
+    </div>
+</div>
+******************************************************************************************************/
+
+const caseElements = [];
+function createCaseElement(imgIndex, imgSrc, text1, text2){
+    const imageHoverZoom = document.createElement('div');
+    const imageContainer = document.createElement('div');
+    const imgElement = document.createElement('img');
+    const divElement = document.createElement('div');
+    const text1Element = document.createElement('p');
+    const text2Element = document.createElement('p');
+
+    imageHoverZoom.classList.add('image-hover-zoom');
+    imageContainer.classList.add('image-container');
+    divElement.classList.add('absolute','bottom-4', 'left-2', 'text-white');
+    imgElement.src = imgSrc;
+    imgElement.alt = `Image ${imgIndex + 1}`;
+    text1Element.classList.add('text-2xl', 'font-bold');
+    text1Element.innerHTML = text1;
+    text2Element.classList.add('text-lg');
+    text2Element.innerHTML = text2;
+
+    divElement.appendChild(text1Element);
+    divElement.appendChild(text2Element);
+
+    imageContainer.appendChild(imgElement);
+    imageContainer.appendChild(divElement);
+
+    imageHoverZoom.appendChild(imageContainer);
+    return imageHoverZoom;
+}
+
+function createCaseElements(){
+    for(let i=0; i<caseImageSrcs.length; i++){
+        caseElements.push(createCaseElement(i, caseImageSrcs[i], caseCustomers[i], caseNames[i]));
+    }
+}
+
 let curCaseIndex = -1;
 const banner = document.querySelector('header.bg-blue-500');
 const dropdownButton = document.getElementById('dropdownButton');
@@ -35,7 +86,34 @@ const nextButton = document.getElementById('detail-section-button-next');
 const preButton = document.getElementById('detail-section-button-pre');
 const closeButton = document.getElementById('detail-section-button-close');
 const secondRowImages = document.getElementById('second-row-images');
-const allImageDivs = document.querySelectorAll('.image-hover-zoom');
+
+function updateCaseElements() {
+    const width = window.innerWidth;
+
+    firstRowImages.innerHTML = '';
+    secondRowImages.innerHTML = '';
+
+    if (width >= 1280) {
+        for (let i = 0; i < 4; i++) {
+            firstRowImages.appendChild(caseElements[i]);
+        }
+        for (let i = 4; i < caseImageSrcs.length; i++) {
+            secondRowImages.appendChild(caseElements[i]);
+        }
+    } else if (width >= 768 && width < 1280) {
+        for (let i = 0; i < 3; i++) {
+            firstRowImages.appendChild(caseElements[i]);
+        }
+        for (let i = 3; i < caseImageSrcs.length; i++) {
+            secondRowImages.appendChild(caseElements[i]);
+        }
+    } else {
+        firstRowImages.appendChild(caseElements[0]);
+        for (let i = 1; i < caseImageSrcs.length; i++) {
+            secondRowImages.appendChild(caseElements[i]);
+        }
+    }
+}
 
 function setFirstRowImagesMr() {
     firstRowImages.style.marginTop = `${banner.offsetHeight}px`;
@@ -47,6 +125,7 @@ function OnWindowLoad(){
 
 function OnWindowResized(){
     console.log('OnWindowResized');
+    updateCaseElements();
     setFirstRowImagesMr();
     const slide_shink_objs = document.querySelectorAll('.slide_shink_class.show');
     slide_shink_objs.forEach(function(slide_shink_obj) {
@@ -60,6 +139,9 @@ function OnWindowResized(){
     });
 }
 
+createCaseElements();
+updateCaseElements();
+const allImageDivs = document.querySelectorAll('.image-hover-zoom');
 // 页面加载时设置初始边距
 window.addEventListener('load', OnWindowLoad);
 // 窗口大小改变时重新设置边距
