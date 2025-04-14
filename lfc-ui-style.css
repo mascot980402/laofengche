@@ -204,3 +204,26 @@ header.bg-blue-500 {
     display: block;
     margin: 0 auto;
 }
+.flex_ele_container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.flex_ele_item {
+    display: flex;
+    align-items: center;
+    margin: 10px;
+    color: white;
+}
+
+.flex_ele_item sicon {
+    margin-right: 10px;
+}
+
+@media (max-width: 768px) {
+    .flex_ele_container {
+        flex-direction: column;
+        align-items: center;
+    }
+}
