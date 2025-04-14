@@ -205,6 +205,7 @@ function resetDetailSection(){
     caseName.textContent = "";
     caseDetail.textContent = "";
     caseVideo.pause();
+    caseVideo.src = "";
 }
 
 function openDetailSection(index){
