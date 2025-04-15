@@ -96,36 +96,6 @@
             <a href="https://beian.mps.gov.cn/#/query/webSearch?code=31011202020893" class="text-white" target="_blank">沪公网安备31011202020893号 沪ICP备20022418号-1</a>
         </div>
     </div>
-    <div class="max-w-md mx-auto bg-white p-6 rounded-md shadow-md">
-        <h1 class="text-2xl font-bold mb-4">Text from File</h1>
-        <ul id="text-list" class="list-disc pl-5"></ul>
-    </div>
-    <script>
-        const list = document.getElementById('text-list');
-        fetch('data.txt')
-          .then(response => {
-                if (!response.ok) {
-                    console.log("error occurs while reading data.txt");
-                    throw new Error('Network response was not ok');
-                }
-                return response.text();
-            })
-          .then(data => {
-                const lines = data.split('\n');
-                console.log(`lines count: ${lines.length}`)
-                console.log(lines);
-                lines.forEach(line => {
-                    if (line.trim()!== '') {
-                        const listItem = document.createElement('li');
-                        listItem.textContent = line;
-                        list.appendChild(listItem);
-                    }
-                });
-            })
-          .catch(error => {
-                console.error('There was a problem with the fetch operation:', error);
-            });
-    </script>
     <script src="lfc-ui-control.js"></script>
 </body>
 
