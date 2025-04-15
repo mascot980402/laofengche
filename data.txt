@@ -1,0 +1,20 @@
+for_each，tranform
+find，find_if，adjacent_find
+binary_search，count，count_if
+random_shuffle，shuffle
+merge，reverse，copy，replace，swap，fill
+accumulate
+container:vector, array, string, map, set, queue, stack, prioriry_queue, pair, tuple
+iterator
+algorithm:for_each, transform, find, find_if, count, sort, binary_search, shuttle, merge, swap, accumulate,adjacent_search
+allocator
+container adapter: stack, queue
+function adapter: greater, less, plus, bind, class function
+shared_ptr, unique_prt, weak_ptr
+thread, async, future, mutex, atomic, this_thread, conditional_variable
+function, lambda
+operator overide
+adapter function
+auto(变量推理类型）, decltype（表达式推理类型）
+nullptr, const, constexpr
+for,explicit,final, override, right value(右值）
